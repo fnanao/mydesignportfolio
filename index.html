@@ -7,11 +7,8 @@
     <title>Nana's Portfolio</title>
     <script src="https://cdn.tailwindcss.com"></script>
 
-    <!-- Favicon -->
     <link rel="icon" type="image/png" href="images/favicon.png">
-   
 
-    <!-- Fonts -->
     <style>
         @font-face {
             font-family: 'Gotham Rounded';
@@ -22,7 +19,6 @@
             font-style: normal;
         }
 
-        /* Body & background */
         body {
             font-family: 'Gotham', 'Gotham Rounded', sans-serif;
             background-color: #000;
@@ -31,10 +27,7 @@
             background-position: center;
             background-attachment: fixed;
             color: #fff;
-            position: relative;
             scroll-behavior: smooth;
-
-            /* Fade-in page */
             opacity: 0;
             transition: opacity 0.8s ease-in-out;
         }
@@ -66,10 +59,6 @@
             box-shadow: 0 0 25px #22d3ee, 0 0 50px #22d3ee;
         }
 
-        .nav-link {
-            font-size: 0.875rem;
-        }
-
         #navMenu {
             z-index: 60;
         }
@@ -80,8 +69,8 @@
         }
 
         .skill-logo {
-            height: 8;
-            width: 8;
+            height: 2rem;
+            width: 2rem;
         }
 
         /* Lightbox */
@@ -184,25 +173,19 @@
         #scrollTopBtn:hover {
             background-color: #00ffff;
         }
-
-        /* Page container for margins */
-        .page-container {
-            max-width: 1280px;
-            margin: 0 auto;
-            padding: 0 20px;
-            width: 100%;
-        }
     </style>
 </head>
 
 <body class="transition-colors duration-500">
 
-    <div class="page-container">
+    <div class="max-w-7xl mx-auto px-4">
+
         <!-- Navbar -->
-        <header class="fixed top-0 left-0 w-full z-50 flex items-center justify-between px-4 py-3">
+        <header
+            class="fixed top-0 left-0 w-full z-50 flex items-center justify-between px-4 py-3 ">
             <div class="flex items-center space-x-2">
                 <a href="#home">
-                    <img src="images/logo.png" alt="My Logo" class="h-16 w-16 cursor-pointer">
+                    <img src="images/logo.png" alt="My Logo" class="h-12 w-12 md:h-16 md:w-16 cursor-pointer">
                 </a>
                 <h1 class="text-cyan-400 font-bold text-lg md:text-xl">PORTFOLIO</h1>
             </div>
@@ -210,30 +193,30 @@
             <button id="menuBtn" class="md:hidden text-cyan-400 text-3xl">&#9776;</button>
 
             <nav id="navMenu"
-                class="hidden md:flex justify-center space-x-4 md:space-x-6 absolute md:static top-14 left-0 w-full md:w-auto p-4 md:p-0 bg-black md:bg-transparent rounded-b-lg">
+                class="hidden md:flex justify-center space-x-4 md:space-x-6 absolute md:static top-16 left-0 w-full md:w-auto p-4 md:p-0 bg-black/90 md:bg-transparent rounded-b-lg">
                 <a href="#home"
-                    class="nav-link block md:inline px-3 py-1 border-2 border-cyan-400 rounded-full text-white hover:bg-cyan-400 hover:text-black transition">Home</a>
+                    class="nav-link block md:inline px-3 py-1 border-2 border-cyan-400 rounded-full text-white text-center hover:bg-cyan-400 hover:text-black transition">Home</a>
                 <a href="#skills"
-                    class="nav-link block md:inline px-3 py-1 border-2 border-cyan-400 rounded-full text-white hover:bg-cyan-400 hover:text-black transition">Skills</a>
+                    class="nav-link block md:inline px-3 py-1 border-2 border-cyan-400 rounded-full text-white text-center hover:bg-cyan-400 hover:text-black transition">Skills</a>
                 <a href="#designs"
-                    class="nav-link block md:inline px-3 py-1 border-2 border-cyan-400 rounded-full text-white hover:bg-cyan-400 hover:text-black transition">Designs</a>
+                    class="nav-link block md:inline px-3 py-1 border-2 border-cyan-400 rounded-full text-white text-center hover:bg-cyan-400 hover:text-black transition">Designs</a>
                 <a href="#contact"
-                    class="nav-link block md:inline px-3 py-1 border-2 border-cyan-400 rounded-full text-white hover:bg-cyan-400 hover:text-black transition">Contact</a>
+                    class="nav-link block md:inline px-3 py-1 border-2 border-cyan-400 rounded-full text-white text-center hover:bg-cyan-400 hover:text-black transition">Contact</a>
             </nav>
         </header>
 
         <!-- Hero Section -->
         <section id="home"
-            class="min-h-screen flex flex-col items-center justify-center px-4 pt-24 fade-in scroll-target">
-            <div class="flex flex-col md:flex-row items-center md:items-start gap-6 max-w-6xl">
-                <div class="w-48 h-48 md:w-64 md:h-64 rounded-full glow overflow-hidden flex-shrink-0 fade-in mt-12">
+            class="min-h-screen flex flex-col md:flex-row items-center justify-center pt-24 gap-6 scroll-target fade-in">
+            <div class="flex flex-col md:flex-row items-center md:items-start gap-6 w-full max-w-6xl">
+                <div class="w-48 h-48 md:w-64 md:h-64 rounded-full glow overflow-hidden flex-shrink-0 mt-12">
                     <img src="images/heroimg.jpg" alt="Nana" class="w-full h-full object-cover">
                 </div>
-                <div class="max-w-xl text-center md:text-left fade-in-delay">
-                    <h1 class="text-4xl md:text-5xl font-bold mb-4 flex items-center gap-2">
+                <div class="max-w-xl text-center md:text-left flex flex-col justify-center fade-in-delay">
+                    <h1
+                        class="text-4xl md:text-5xl font-bold mb-4 flex flex-wrap items-center gap-2 justify-center md:justify-start">
                         Hi, I am <span class="highlight">Nana</span>
-                    <img src="images/gh.png" alt="Logo" class="h-16 w-12 md:h-20 md:w-16">
-
+                        <img src="images/gh.png" alt="Logo" class="h-16 w-12 md:h-20 md:w-16">
                     </h1>
                     <p class="text-2xl md:text-3xl mb-6">
                         I am a <span class="highlight">Graphic Designer</span> and <span class="highlight">Frontend
@@ -245,8 +228,9 @@
                         specialize in flyers, posters, brand identity, and frontend development with modern
                         technologies.
                     </p>
-                    <a href="#skills" id="exploreSkillsBtn"
-                        class="px-6 py-3 border-2 border-cyan-400 rounded-full text-white hover:bg-cyan-400 hover:text-black transition">
+                    <a href="#skills"
+                        class="px-6 py-3 border-2 border-cyan-400 rounded-full text-white hover:bg-cyan-400 hover:text-black transition mx-auto md:mx-0"
+                        id="exploreSkillsBtn">
                         Explore My Skills
                     </a>
                 </div>
@@ -258,11 +242,11 @@
 
         <!-- Skills Section -->
         <section id="skills"
-            class="min-h-screen flex items-center justify-center px-4 py-12 gap-12 max-w-6xl mx-auto fade-in scroll-target">
+            class="min-h-screen flex flex-col md:flex-row items-center justify-center py-12 gap-12 scroll-target fade-in">
             <div class="w-full md:w-1/2 flex justify-center">
-                <img src="images/skill.png" alt="Skills" class="rounded-lg shadow-lg object-cover">
+                <img src="images/skill.png" alt="Skills" class="rounded-lg shadow-lg object-cover max-w-full h-auto">
             </div>
-            <div class="w-full md:w-1/2 text-left">
+            <div class="w-full md:w-1/2 text-center md:text-left">
                 <h2 class="text-3xl md:text-4xl font-bold mb-6 text-cyan-400">My Skills</h2>
                 <p class="text-gray-300 mb-8">
                     I work with top design tools to bring creativity to life. Below is a snapshot of my current skillset
@@ -270,35 +254,41 @@
                     experience.
                 </p>
                 <div class="space-y-4">
-                    <div class="flex items-center gap-3">
-                        <img src="images/ps.png" alt="Photoshop Logo" class="h-8 w-8 skill-logo">
-                        <p class="text-white font-semibold mb-2">Photoshop</p>
+                    <!-- Skill items -->
+                    <div>
+                        <div class="flex items-center gap-3 justify-center md:justify-start">
+                            <img src="images/ps.png" alt="Photoshop Logo" class="skill-logo">
+                            <p class="text-white font-semibold mb-2">Photoshop</p>
+                        </div>
+                        <div class="w-full h-4 bg-gray-700 rounded-full overflow-hidden">
+                            <div class="h-4 bg-cyan-400" style="width: 80%;"></div>
+                        </div>
+                        <span class="text-gray-300">80%</span>
                     </div>
-                    <div class="w-full h-4 bg-gray-700 rounded-full overflow-hidden mb-2">
-                        <div class="h-4 bg-cyan-400" style="width: 80%;"></div>
+                    <div>
+                        <div class="flex items-center gap-3 justify-center md:justify-start">
+                            <img src="images/af.png" alt="Affinity Logo" class="skill-logo">
+                            <p class="text-white font-semibold mb-2">Affinity Designer</p>
+                        </div>
+                        <div class="w-full h-4 bg-gray-700 rounded-full overflow-hidden">
+                            <div class="h-4 bg-cyan-400" style="width: 90%;"></div>
+                        </div>
+                        <span class="text-gray-300">90%</span>
                     </div>
-                    <span class="text-gray-300 mb-4">80%</span>
-
-                    <div class="flex items-center gap-3">
-                        <img src="images/af.png" alt="Affinity Logo" class="h-8 w-8 skill-logo">
-                        <p class="text-white font-semibold mb-2">Affinity Designer</p>
+                    <div>
+                        <div class="flex items-center gap-3 justify-center md:justify-start">
+                            <img src="images/fig.png" alt="Figma Logo" class="skill-logo">
+                            <p class="text-white font-semibold mb-2">Figma</p>
+                        </div>
+                        <div class="w-full h-4 bg-gray-700 rounded-full overflow-hidden">
+                            <div class="h-4 bg-cyan-400" style="width: 75%;"></div>
+                        </div>
+                        <span class="text-gray-300">75%</span>
                     </div>
-                    <div class="w-full h-4 bg-gray-700 rounded-full overflow-hidden mb-2">
-                        <div class="h-4 bg-cyan-400" style="width: 90%;"></div>
-                    </div>
-                    <span class="text-gray-300 mb-4">90%</span>
-
-                    <div class="flex items-center gap-3">
-                        <img src="images/fig.png" alt="Figma Logo" class="h-8 w-8 skill-logo">
-                        <p class="text-white font-semibold mb-2">Figma</p>
-                    </div>
-                    <div class="w-full h-4 bg-gray-700 rounded-full overflow-hidden mb-2">
-                        <div class="h-4 bg-cyan-400" style="width: 75%;"></div>
-                    </div>
-                    <span class="text-gray-300">75%</span>
                 </div>
-                <a href="#designs" id="viewWorksBtn"
-                    class="mt-8 inline-block px-6 py-3 border-2 border-cyan-400 rounded-full text-white hover:bg-cyan-400 hover:text-black transition">
+                <a href="#designs"
+                    class="mt-8 inline-block px-6 py-3 border-2 border-cyan-400 rounded-full text-white hover:bg-cyan-400 hover:text-black transition"
+                    id="viewWorksBtn">
                     View My Works
                 </a>
             </div>
@@ -306,8 +296,8 @@
 
         <!-- Designs Section -->
         <section id="designs"
-            class="min-h-screen flex flex-col items-center justify-center px-4 py-12 gap-8 max-w-6xl mx-auto fade-in scroll-target">
-            <h2 class="text-3xl md:text-4xl font-bold mb-8 text-cyan-400">My Designs</h2>
+            class="min-h-screen flex flex-col items-center justify-center py-12 gap-8 scroll-target fade-in">
+            <h2 class="text-3xl md:text-4xl font-bold mb-8 text-cyan-400 text-center">My Designs</h2>
             <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4 w-full">
                 <img src="images/flier1.jpg" alt="Design 1"
                     class="rounded-lg shadow-lg object-contain design-item hover:scale-105 transition">
@@ -347,8 +337,8 @@
                     class="rounded-lg shadow-lg object-contain design-item hover:scale-105 transition">
                 <img src="images/flier14.jpg" alt="Design 1"
                     class="rounded-lg shadow-lg object-contain design-item hover:scale-105 transition">
-                    <img src="images/port.jpg" alt="Design 1"
-                        class="rounded-lg shadow-lg object-contain design-item hover:scale-105 transition">
+                <img src="images/port.jpg" alt="Design 1"
+                    class="rounded-lg shadow-lg object-contain design-item hover:scale-105 transition">
             </div>
         </section>
 
@@ -362,17 +352,17 @@
 
         <!-- Contact Section -->
         <section id="contact"
-            class="min-h-screen flex items-center justify-center px-4 py-12 gap-12 max-w-6xl mx-auto fade-in scroll-target">
+            class="min-h-screen flex flex-col md:flex-row items-center justify-center py-12 gap-12 scroll-target fade-in">
             <div class="w-full md:w-1/2 flex justify-center">
-                <img src="images/contact.jpg" alt="Contact" class="rounded-lg shadow-lg object-cover">
+                <img src="images/contact.jpg" alt="Contact" class="rounded-lg shadow-lg object-cover max-w-full h-auto">
             </div>
-            <div class="w-full md:w-1/2 text-left">
+            <div class="w-full md:w-1/2 text-center md:text-left">
                 <h2 class="text-3xl md:text-4xl font-bold mb-6 text-cyan-400">Contact Me</h2>
                 <p class="text-gray-300 mb-6">
                     Let's connect via email. I’d love to hear from you!
                 </p>
                 <a href="mailto:opokyawfnana@gmail.com"
-                    class="flex items-center space-x-2 px-6 py-3 border-2 border-cyan-400 rounded-full text-white hover:bg-cyan-400 hover:text-black transition">
+                    class="flex items-center justify-center md:justify-start gap-2 px-6 py-3 border-2 border-cyan-400 rounded-full text-white hover:bg-cyan-400 hover:text-black transition">
                     <img src="images/gmail.png" alt="Gmail" class="h-5 w-5 md:h-6 md:w-6">
                     <span>opokyawfnana@gmail.com</span>
                 </a>
@@ -382,6 +372,7 @@
         <footer class="text-center py-4 text-gray-400 text-xs md:text-sm">
             © 2025 nanaopokudesigns. All Rights Reserved.
         </footer>
+
     </div>
 
     <script>
@@ -395,54 +386,42 @@
         const navLinks = document.querySelectorAll(".nav-link");
 
         // Mobile toggle
-        menuBtn.addEventListener("click", () => {
-            navMenu.classList.toggle("hidden");
-        });
+        menuBtn.addEventListener("click", () => navMenu.classList.toggle("hidden"));
 
         navLinks.forEach(link => {
             link.addEventListener("click", (e) => {
                 e.preventDefault();
-                const target = document.querySelector(link.getAttribute('href'));
-                target.scrollIntoView({ behavior: 'smooth' });
-
-                if (!navMenu.classList.contains("hidden")) {
-                    navMenu.classList.add("hidden");
-                }
+                document.querySelector(link.getAttribute('href')).scrollIntoView({ behavior: 'smooth' });
+                if (!navMenu.classList.contains("hidden")) navMenu.classList.add("hidden");
             });
         });
 
-        // Active nav highlight
+        // Active nav highlight & scroll effects
         const sections = document.querySelectorAll("section");
+        const scrollTopBtn = document.getElementById('scrollTopBtn');
+
         window.addEventListener("scroll", () => {
             let current = "";
             sections.forEach(section => {
                 const sectionTop = section.offsetTop - 120;
-                if (scrollY >= sectionTop) {
-                    current = section.getAttribute("id");
-                }
+                if (scrollY >= sectionTop) current = section.getAttribute("id");
             });
             navLinks.forEach(link => {
                 link.classList.remove("active-link");
-                if (link.getAttribute("href") === "#" + current) {
-                    link.classList.add("active-link");
-                }
+                if (link.getAttribute("href") === "#" + current) link.classList.add("active-link");
             });
 
-            // Show scroll top button
-            document.getElementById('scrollTopBtn').style.display = scrollY > window.innerHeight ? 'block' : 'none';
+            // Show scrollTopBtn
+            scrollTopBtn.style.display = scrollY > window.innerHeight ? 'block' : 'none';
 
-            // Animate sections on scroll
+            // Animate sections
             document.querySelectorAll('.scroll-target').forEach(section => {
                 const rect = section.getBoundingClientRect();
-                if (rect.top < window.innerHeight - 100) {
-                    section.classList.add('visible');
-                }
+                if (rect.top < window.innerHeight - 100) section.classList.add('visible');
             });
         });
 
-        document.getElementById('scrollTopBtn').addEventListener('click', () => {
-            window.scrollTo({ top: 0, behavior: 'smooth' });
-        });
+        scrollTopBtn.addEventListener('click', () => window.scrollTo({ top: 0, behavior: 'smooth' }));
 
         // Lightbox functionality
         const lightbox = document.getElementById('lightbox');
@@ -456,51 +435,17 @@
             lightboxImg.src = designItems[index].src;
             lightbox.style.display = 'flex';
         };
-
         const closeLightbox = () => lightbox.style.display = 'none';
-        const showPrev = () => {
-            currentIndex = (currentIndex - 1 + designItems.length) % designItems.length;
-            lightboxImg.src = designItems[currentIndex].src;
-        };
-        const showNext = () => {
-            currentIndex = (currentIndex + 1) % designItems.length;
-            lightboxImg.src = designItems[currentIndex].src;
-        };
+        const showPrev = () => { currentIndex = (currentIndex - 1 + designItems.length) % designItems.length; lightboxImg.src = designItems[currentIndex].src; };
+        const showNext = () => { currentIndex = (currentIndex + 1) % designItems.length; lightboxImg.src = designItems[currentIndex].src; };
 
         designItems.forEach((item, index) => item.addEventListener('click', () => openLightbox(index)));
+        closeBtn.addEventListener('click', closeLightbox);
         lightbox.querySelector('.prev').addEventListener('click', showPrev);
         lightbox.querySelector('.next').addEventListener('click', showNext);
-        closeBtn.addEventListener('click', closeLightbox);
         lightbox.addEventListener('click', e => { if (e.target === lightbox) closeLightbox(); });
-
-        document.addEventListener('keydown', (e) => {
-            if (lightbox.style.display === 'flex') {
-                if (e.key === 'ArrowLeft') showPrev();
-                if (e.key === 'ArrowRight') showNext();
-                if (e.key === 'Escape') closeLightbox();
-            }
-        });
-
-        // Smooth scroll for "View My Works" and "Explore My Skills" buttons
-        const viewWorksBtn = document.getElementById('viewWorksBtn');
-        const exploreSkillsBtn = document.getElementById('exploreSkillsBtn');
-        const skillsSection = document.getElementById('skills');
-        const designsSection = document.getElementById('designs');
-
-        viewWorksBtn.addEventListener('click', (e) => {
-            e.preventDefault();
-            designsSection.classList.add('scroll-target');
-            setTimeout(() => designsSection.classList.add('visible'), 50);
-            designsSection.scrollIntoView({ behavior: 'smooth' });
-        });
-
-        exploreSkillsBtn.addEventListener('click', (e) => {
-            e.preventDefault();
-            skillsSection.classList.add('scroll-target');
-            setTimeout(() => skillsSection.classList.add('visible'), 50);
-            skillsSection.scrollIntoView({ behavior: 'smooth' });
-        });
     </script>
+
 </body>
 
 </html>
