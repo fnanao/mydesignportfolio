@@ -9,7 +9,9 @@
 
     <!-- Favicon -->
     <link rel="icon" type="image/png" href="images/favicon.png">
+   
 
+    <!-- Fonts -->
     <style>
         @font-face {
             font-family: 'Gotham Rounded';
@@ -20,231 +22,481 @@
             font-style: normal;
         }
 
-        html {
-            scroll-behavior: smooth;
-        }
-
+        /* Body & background */
         body {
-            font-family: 'Gotham Rounded', sans-serif;
-            background: url('images/bg.jpg') no-repeat center center fixed;
+            font-family: 'Gotham', 'Gotham Rounded', sans-serif;
+            background-color: #000;
+            background-image: url('images/bg.jpg');
             background-size: cover;
+            background-position: center;
+            background-attachment: fixed;
+            color: #fff;
+            position: relative;
+            scroll-behavior: smooth;
+
+            /* Fade-in page */
+            opacity: 0;
+            transition: opacity 0.8s ease-in-out;
         }
 
-        .overlay {
-            background-color: rgba(0, 0, 0, 0.7);
+        body.loaded {
+            opacity: 1;
+        }
+
+        body::before {
+            content: '';
             position: fixed;
-            inset: 0;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.6);
             z-index: -1;
         }
 
-        .active-link {
-            color: white !important;
-            border-color: #22d3ee !important;
+        .highlight {
+            color: #22d3ee;
+        }
+
+        .glow {
+            box-shadow: 0 0 30px #22d3ee, 0 0 60px #22d3ee;
+        }
+
+        .nav-link.active-link {
+            box-shadow: 0 0 25px #22d3ee, 0 0 50px #22d3ee;
+        }
+
+        .nav-link {
+            font-size: 0.875rem;
+        }
+
+        #navMenu {
+            z-index: 60;
+        }
+
+        .design-item:hover {
+            box-shadow: 0 0 20px #22d3ee;
+            cursor: pointer;
+        }
+
+        .skill-logo {
+            height: 8;
+            width: 8;
+        }
+
+        /* Lightbox */
+        #lightbox {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.9);
+            display: none;
+            justify-content: center;
+            align-items: center;
+            z-index: 1000;
+            flex-direction: column;
+        }
+
+        #lightbox img {
+            max-width: 90%;
+            max-height: 80%;
+        }
+
+        #lightbox .arrow {
+            position: absolute;
+            top: 50%;
+            transform: translateY(-50%);
+            font-size: 3rem;
+            color: #22d3ee;
+            cursor: pointer;
+            user-select: none;
+        }
+
+        #lightbox .prev {
+            left: 20px;
+        }
+
+        #lightbox .next {
+            right: 20px;
+        }
+
+        #lightbox .close-btn {
+            position: absolute;
+            top: 20px;
+            right: 30px;
+            font-size: 2rem;
+            color: #22d3ee;
+            cursor: pointer;
+            user-select: none;
+        }
+
+        /* Hero motion */
+        .fade-in {
+            opacity: 0;
+            transform: translateY(20px);
+            animation: fadeInUp 1s forwards;
+        }
+
+        .fade-in-delay {
+            opacity: 0;
+            transform: translateY(20px);
+            animation: fadeInUp 1s forwards;
+            animation-delay: 0.5s;
+        }
+
+        @keyframes fadeInUp {
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        /* Scroll-triggered animations */
+        .scroll-target {
+            opacity: 0;
+            transform: translateY(20px);
+            transition: opacity 0.8s ease, transform 0.8s ease;
+        }
+
+        .scroll-target.visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        /* Scroll to top button */
+        #scrollTopBtn {
+            position: fixed;
+            bottom: 30px;
+            right: 30px;
+            z-index: 100;
+            background-color: #22d3ee;
+            color: #000;
+            padding: 12px 16px;
+            border-radius: 70%;
+            font-size: 1.5rem;
+            cursor: pointer;
+            display: none;
             box-shadow: 0 0 15px #22d3ee, 0 0 30px #22d3ee;
         }
 
-        #lightbox {
-            display: none;
+        #scrollTopBtn:hover {
+            background-color: #00ffff;
         }
 
-        #lightbox.active {
-            display: flex;
+        /* Page container for margins */
+        .page-container {
+            max-width: 1280px;
+            margin: 0 auto;
+            padding: 0 20px;
+            width: 100%;
         }
     </style>
 </head>
 
-<body class="text-white transition-colors duration-500">
+<body class="transition-colors duration-500">
 
-    <!-- Background overlay -->
-    <div class="overlay"></div>
+    <div class="page-container">
+        <!-- Navbar -->
+        <header class="fixed top-0 left-0 w-full z-50 flex items-center justify-between px-4 py-3">
+            <div class="flex items-center space-x-2">
+                <a href="#home">
+                    <img src="images/logo.png" alt="My Logo" class="h-16 w-16 cursor-pointer">
+                </a>
+                <h1 class="text-cyan-400 font-bold text-lg md:text-xl">PORTFOLIO</h1>
+            </div>
 
-    <!-- Header -->
-    <header
-        class="fixed top-0 left-0 w-full bg-black bg-opacity-70 z-50 shadow-md flex items-center justify-between px-4 py-3">
-        <!-- Logo + Title -->
-        <div class="flex items-center space-x-2">
-            <a href="#about">
-                <img src="images/logo.png" alt="My Logo" class="h-10 w-auto cursor-pointer">
-            </a>
-            <h1 class="text-cyan-400 font-bold text-lg md:text-xl">PORTFOLIO</h1>
-        </div>
+            <button id="menuBtn" class="md:hidden text-cyan-400 text-3xl">&#9776;</button>
 
-        <!-- Mobile Menu Button -->
-        <button id="menuBtn" class="md:hidden text-cyan-400 text-3xl">&#9776;</button>
+            <nav id="navMenu"
+                class="hidden md:flex justify-center space-x-4 md:space-x-6 absolute md:static top-14 left-0 w-full md:w-auto p-4 md:p-0 bg-black md:bg-transparent rounded-b-lg">
+                <a href="#home"
+                    class="nav-link block md:inline px-3 py-1 border-2 border-cyan-400 rounded-full text-white hover:bg-cyan-400 hover:text-black transition">Home</a>
+                <a href="#skills"
+                    class="nav-link block md:inline px-3 py-1 border-2 border-cyan-400 rounded-full text-white hover:bg-cyan-400 hover:text-black transition">Skills</a>
+                <a href="#designs"
+                    class="nav-link block md:inline px-3 py-1 border-2 border-cyan-400 rounded-full text-white hover:bg-cyan-400 hover:text-black transition">Designs</a>
+                <a href="#contact"
+                    class="nav-link block md:inline px-3 py-1 border-2 border-cyan-400 rounded-full text-white hover:bg-cyan-400 hover:text-black transition">Contact</a>
+            </nav>
+        </header>
 
-        <!-- Navigation -->
-        <nav id="navMenu"
-            class="hidden md:flex justify-center space-x-4 md:space-x-6 absolute md:static top-14 left-0 w-full md:w-auto bg-black md:bg-transparent p-4 md:p-0">
-            <a href="#about"
-                class="nav-link block md:inline px-4 py-2 border-2 border-cyan-400 rounded-full text-white bg-black transition">ABOUT
-                ME</a>
-            <a href="#designs"
-                class="nav-link block md:inline px-4 py-2 border-2 border-cyan-400 rounded-full text-white bg-black transition">DESIGNS</a>
-            <a href="#contact"
-                class="nav-link block md:inline px-4 py-2 border-2 border-cyan-400 rounded-full text-white bg-black transition">CONTACT</a>
-        </nav>
-    </header>
+        <!-- Hero Section -->
+        <section id="home"
+            class="min-h-screen flex flex-col items-center justify-center px-4 pt-24 fade-in scroll-target">
+            <div class="flex flex-col md:flex-row items-center md:items-start gap-6 max-w-6xl">
+                <div class="w-48 h-48 md:w-64 md:h-64 rounded-full glow overflow-hidden flex-shrink-0 fade-in mt-12">
+                    <img src="images/heroimg.jpg" alt="Nana" class="w-full h-full object-cover">
+                </div>
+                <div class="max-w-xl text-center md:text-left fade-in-delay">
+                    <h1 class="text-4xl md:text-5xl font-bold mb-4 flex items-center gap-2">
+                        Hi, I am <span class="highlight">Nana</span>
+                    <img src="images/gh.png" alt="Logo" class="h-16 w-12 md:h-20 md:w-16">
 
-    <!-- Sections -->
-    <main class="pt-24">
-
-        <!-- About -->
-        <section id="about" class="min-h-screen flex flex-col items-center justify-center px-4 text-center">
-            <h1 class="text-3xl md:text-4xl font-bold mb-4 text-cyan-400">ABOUT ME</h1>
-            <p class="max-w-2xl text-base md:text-lg text-gray-300">
-                Nana Yaw Frimpong Opoku is a passionate graphic designer with an eye for creativity and detail.
-                I specialize in creating visually compelling designs that tell stories, connect with people,
-                and make brands stand out. My services include 🎨 graphic design (flyers, posters, social media),
-                and 📸 brand identity & logo design.
-            </p>
-        </section>
-
-        <!-- Designs -->
-        <section id="designs" class="min-h-screen flex flex-col items-center justify-center px-4">
-            <h2 class="text-2xl md:text-3xl font-bold mb-6 text-cyan-400">MY DESIGNS</h2>
-            <div id="gallery" class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4 px-4 md:px-16">
-                <!-- Your images -->
-                <img src="images/flier1.jpg" alt="Design 1"
-                    class="rounded-lg shadow-lg hover:scale-105 transition cursor-pointer max-h-48 object-contain">
-                    <img src="images/flier2.jpg" alt="Design 2"
-                        class="rounded-lg shadow-lg hover:scale-105 transition cursor-pointer max-h-48 object-contain"> <img
-                        src="images/flier3.jpg" alt="Design 3"
-                        class="rounded-lg shadow-lg hover:scale-105 transition cursor-pointer max-h-48 object-contain"> <img
-                        src="images/flier4.jpg" alt="Design 4"
-                        class="rounded-lg shadow-lg hover:scale-105 transition cursor-pointer max-h-48 object-contain"> <img
-                        src="images/flier5.jpg" alt="Design 5"
-                        class="rounded-lg shadow-lg hover:scale-105 transition cursor-pointer max-h-48 object-contain"> <img
-                        src="images/flier7.jpg" alt="Design 7"
-                        class="rounded-lg shadow-lg hover:scale-105 transition cursor-pointer max-h-48 object-contain"> <img
-                        src="images/flier8.jpg" alt="Design 8"
-                        class="rounded-lg shadow-lg hover:scale-105 transition cursor-pointer max-h-48 object-contain"> <img
-                        src="images/flier10.jpg" alt="Design 10"
-                        class="rounded-lg shadow-lg hover:scale-105 transition cursor-pointer max-h-48 object-contain"> <img
-                        src="images/flier11.jpg" alt="Design 11"
-                        class="rounded-lg shadow-lg hover:scale-105 transition cursor-pointer max-h-48 object-contain"> <img
-                        src="images/flier13.jpg" alt="Design 13"
-                        class="rounded-lg shadow-lg hover:scale-105 transition cursor-pointer max-h-48 object-contain"> <img
-                        src="images/flier15.jpg" alt="Design 15"
-                        class="rounded-lg shadow-lg hover:scale-105 transition cursor-pointer max-h-48 object-contain"> <img
-                        src="images/flier16.jpg" alt="Design 16"
-                        class="rounded-lg shadow-lg hover:scale-105 transition cursor-pointer max-h-48 object-contain"> <img
-                        src="images/flier17.jpg" alt="Design 17"
-                        class="rounded-lg shadow-lg hover:scale-105 transition cursor-pointer max-h-48 object-contain"> <img
-                        src="images/flier18.jpg" alt="Design 18"
-                        class="rounded-lg shadow-lg hover:scale-105 transition cursor-pointer max-h-48 object-contain"> <img
-                        src="images/logo1.png" alt="Logo 1"
-                        class="rounded-lg shadow-lg hover:scale-105 transition cursor-pointer max-h-48 object-contain"> <img
-                        src="images/logo2.jpg" alt="Logo 2"
-                        class="rounded-lg shadow-lg hover:scale-105 transition cursor-pointer max-h-48 object-contain"> <img
-                        src="images/logo3.jpg" alt="Logo 3"
-                        class="rounded-lg shadow-lg hover:scale-105 transition cursor-pointer max-h-48 object-contain"> <img
-                        src="images/shirt1.png" alt="Shirt Design"
-                        class="rounded-lg shadow-lg hover:scale-105 transition cursor-pointer max-h-48 object-contain">
-                    <!-- A4 Flyers (last) --> <img src="images/flier6.jpg" alt="Design A4"
-                        class="rounded-lg shadow-lg hover:scale-105 transition cursor-pointer max-h-56 object-contain"> <img
-                        src="images/flier9.jpg" alt="Design A4"
-                        class="rounded-lg shadow-lg hover:scale-105 transition cursor-pointer max-h-56 object-contain"> <img
-                        src="images/flier12.jpg" alt="Design A4"
-                        class="rounded-lg shadow-lg hover:scale-105 transition cursor-pointer max-h-56 object-contain"> <img
-                        src="images/flier14.jpg" alt="Design A4"
-                        class="rounded-lg shadow-lg hover:scale-105 transition cursor-pointer max-h-56 object-contain">
-                <!-- Repeat others here... -->
+                    </h1>
+                    <p class="text-2xl md:text-3xl mb-6">
+                        I am a <span class="highlight">Graphic Designer</span> and <span class="highlight">Frontend
+                            Engineer</span>
+                    </p>
+                    <p class="text-gray-300 mb-6">
+                        Passionate about creating visually compelling designs and building interactive web experiences.
+                        I
+                        specialize in flyers, posters, brand identity, and frontend development with modern
+                        technologies.
+                    </p>
+                    <a href="#skills" id="exploreSkillsBtn"
+                        class="px-6 py-3 border-2 border-cyan-400 rounded-full text-white hover:bg-cyan-400 hover:text-black transition">
+                        Explore My Skills
+                    </a>
+                </div>
             </div>
         </section>
 
-        <!-- Contact -->
-        <section id="contact" class="min-h-screen flex flex-col items-center justify-center px-4 text-center">
-            <h2 class="text-2xl md:text-3xl font-bold mb-6 text-cyan-400">CONTACT ME</h2>
-            <p class="text-base md:text-lg text-gray-300 mb-4">Let’s work together! Reach out via email.</p>
-            <a href="mailto:opokuyawfnana@gmail.com" class="flex items-center space-x-2 text-cyan-400 hover:underline">
-                <img src="images/gmail.png" alt="Gmail" class="h-5 w-5 md:h-6 md:w-6">
-                <span>opokuyawfnana@gmail.com</span>
-            </a>
+        <!-- Scroll to top button -->
+        <div id="scrollTopBtn">&#8679;</div>
+
+        <!-- Skills Section -->
+        <section id="skills"
+            class="min-h-screen flex items-center justify-center px-4 py-12 gap-12 max-w-6xl mx-auto fade-in scroll-target">
+            <div class="w-full md:w-1/2 flex justify-center">
+                <img src="images/skill.png" alt="Skills" class="rounded-lg shadow-lg object-cover">
+            </div>
+            <div class="w-full md:w-1/2 text-left">
+                <h2 class="text-3xl md:text-4xl font-bold mb-6 text-cyan-400">My Skills</h2>
+                <p class="text-gray-300 mb-8">
+                    I work with top design tools to bring creativity to life. Below is a snapshot of my current skillset
+                    and
+                    experience.
+                </p>
+                <div class="space-y-4">
+                    <div class="flex items-center gap-3">
+                        <img src="images/ps.png" alt="Photoshop Logo" class="h-8 w-8 skill-logo">
+                        <p class="text-white font-semibold mb-2">Photoshop</p>
+                    </div>
+                    <div class="w-full h-4 bg-gray-700 rounded-full overflow-hidden mb-2">
+                        <div class="h-4 bg-cyan-400" style="width: 80%;"></div>
+                    </div>
+                    <span class="text-gray-300 mb-4">80%</span>
+
+                    <div class="flex items-center gap-3">
+                        <img src="images/af.png" alt="Affinity Logo" class="h-8 w-8 skill-logo">
+                        <p class="text-white font-semibold mb-2">Affinity Designer</p>
+                    </div>
+                    <div class="w-full h-4 bg-gray-700 rounded-full overflow-hidden mb-2">
+                        <div class="h-4 bg-cyan-400" style="width: 90%;"></div>
+                    </div>
+                    <span class="text-gray-300 mb-4">90%</span>
+
+                    <div class="flex items-center gap-3">
+                        <img src="images/fig.png" alt="Figma Logo" class="h-8 w-8 skill-logo">
+                        <p class="text-white font-semibold mb-2">Figma</p>
+                    </div>
+                    <div class="w-full h-4 bg-gray-700 rounded-full overflow-hidden mb-2">
+                        <div class="h-4 bg-cyan-400" style="width: 75%;"></div>
+                    </div>
+                    <span class="text-gray-300">75%</span>
+                </div>
+                <a href="#designs" id="viewWorksBtn"
+                    class="mt-8 inline-block px-6 py-3 border-2 border-cyan-400 rounded-full text-white hover:bg-cyan-400 hover:text-black transition">
+                    View My Works
+                </a>
+            </div>
         </section>
-    </main>
 
-    <!-- Footer -->
-    <footer class="bg-black bg-opacity-70 text-center py-3 md:py-4 text-gray-400 text-xs md:text-sm">
-        © 2025 OPOKU. All Rights Reserved.
-    </footer>
+        <!-- Designs Section -->
+        <section id="designs"
+            class="min-h-screen flex flex-col items-center justify-center px-4 py-12 gap-8 max-w-6xl mx-auto fade-in scroll-target">
+            <h2 class="text-3xl md:text-4xl font-bold mb-8 text-cyan-400">My Designs</h2>
+            <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4 w-full">
+                <img src="images/flier1.jpg" alt="Design 1"
+                    class="rounded-lg shadow-lg object-contain design-item hover:scale-105 transition">
+                <img src="images/flier2.jpg" alt="Design 2"
+                    class="rounded-lg shadow-lg object-contain design-item hover:scale-105 transition">
+                <img src="images/flier3.jpg" alt="Design 3"
+                    class="rounded-lg shadow-lg object-contain design-item hover:scale-105 transition">
+                <img src="images/flier4.jpg" alt="Design 4"
+                    class="rounded-lg shadow-lg object-contain design-item hover:scale-105 transition">
+                <img src="images/flier5.jpg" alt="Design 1"
+                    class="rounded-lg shadow-lg object-contain design-item hover:scale-105 transition">
+                <img src="images/flier7.jpg" alt="Design 1"
+                    class="rounded-lg shadow-lg object-contain design-item hover:scale-105 transition">
+                <img src="images/flier8.jpg" alt="Design 1"
+                    class="rounded-lg shadow-lg object-contain design-item hover:scale-105 transition">
+                <img src="images/flier10.jpg" alt="Design 1"
+                    class="rounded-lg shadow-lg object-contain design-item hover:scale-105 transition">
+                <img src="images/flier11.jpg" alt="Design 1"
+                    class="rounded-lg shadow-lg object-contain design-item hover:scale-105 transition">
+                <img src="images/flier13.jpg" alt="Design 1"
+                    class="rounded-lg shadow-lg object-contain design-item hover:scale-105 transition">
+                <img src="images/flier15.jpg" alt="Design 1"
+                    class="rounded-lg shadow-lg object-contain design-item hover:scale-105 transition">
+                <img src="images/flier16.jpg" alt="Design 1"
+                    class="rounded-lg shadow-lg object-contain design-item hover:scale-105 transition">
+                <img src="images/flier17.jpg" alt="Design 1"
+                    class="rounded-lg shadow-lg object-contain design-item hover:scale-105 transition">
+                <img src="images/flier18.jpg" alt="Design 1"
+                    class="rounded-lg shadow-lg object-contain design-item hover:scale-105 transition">
+                <img src="images/shirt1.png" alt="Design 1"
+                    class="rounded-lg shadow-lg object-contain design-item hover:scale-105 transition">
+                <img src="images/flier6.jpg" alt="Design 1"
+                    class="rounded-lg shadow-lg object-contain design-item hover:scale-105 transition">
+                <img src="images/flier9.jpg" alt="Design 1"
+                    class="rounded-lg shadow-lg object-contain design-item hover:scale-105 transition">
+                <img src="images/flier12.jpg" alt="Design 1"
+                    class="rounded-lg shadow-lg object-contain design-item hover:scale-105 transition">
+                <img src="images/flier14.jpg" alt="Design 1"
+                    class="rounded-lg shadow-lg object-contain design-item hover:scale-105 transition">
+            </div>
+        </section>
 
-    <!-- Lightbox -->
-    <div id="lightbox"
-        class="fixed inset-0 bg-black bg-opacity-90 flex items-center justify-center z-50 hidden flex-col">
-        <button id="closeLightbox" class="absolute top-4 right-4 text-white text-3xl">&times;</button>
-        <button id="prevImage" class="absolute left-4 text-white text-3xl">&#10094;</button>
-        <img id="lightboxImage" src="" alt="Large View" class="max-h-[90%] max-w-[90%] rounded-lg shadow-lg">
-        <button id="nextImage" class="absolute right-4 text-white text-3xl">&#10095;</button>
+        <!-- Lightbox -->
+        <div id="lightbox" class="flex">
+            <span class="close-btn">&#10005;</span>
+            <span class="arrow prev">&#10094;</span>
+            <img src="" alt="Lightbox Image">
+            <span class="arrow next">&#10095;</span>
+        </div>
+
+        <!-- Contact Section -->
+        <section id="contact"
+            class="min-h-screen flex items-center justify-center px-4 py-12 gap-12 max-w-6xl mx-auto fade-in scroll-target">
+            <div class="w-full md:w-1/2 flex justify-center">
+                <img src="images/contact.jpg" alt="Contact" class="rounded-lg shadow-lg object-cover">
+            </div>
+            <div class="w-full md:w-1/2 text-left">
+                <h2 class="text-3xl md:text-4xl font-bold mb-6 text-cyan-400">Contact Me</h2>
+                <p class="text-gray-300 mb-6">
+                    Let's connect via email. I’d love to hear from you!
+                </p>
+                <a href="mailto:opokyawfnana@gmail.com"
+                    class="flex items-center space-x-2 px-6 py-3 border-2 border-cyan-400 rounded-full text-white hover:bg-cyan-400 hover:text-black transition">
+                    <img src="images/gmail.png" alt="Gmail" class="h-5 w-5 md:h-6 md:w-6">
+                    <span>opokyawfnana@gmail.com</span>
+                </a>
+            </div>
+        </section>
+
+        <footer class="text-center py-4 text-gray-400 text-xs md:text-sm">
+            © 2025 nanaopokudesigns. All Rights Reserved.
+        </footer>
     </div>
 
-    <!-- JS -->
     <script>
-        // Mobile menu toggle
+        // Page fade-in
+        window.addEventListener('DOMContentLoaded', () => {
+            document.body.classList.add('loaded');
+        });
+
         const menuBtn = document.getElementById("menuBtn");
         const navMenu = document.getElementById("navMenu");
+        const navLinks = document.querySelectorAll(".nav-link");
 
+        // Mobile toggle
         menuBtn.addEventListener("click", () => {
             navMenu.classList.toggle("hidden");
         });
 
+        navLinks.forEach(link => {
+            link.addEventListener("click", (e) => {
+                e.preventDefault();
+                const target = document.querySelector(link.getAttribute('href'));
+                target.scrollIntoView({ behavior: 'smooth' });
+
+                if (!navMenu.classList.contains("hidden")) {
+                    navMenu.classList.add("hidden");
+                }
+            });
+        });
+
         // Active nav highlight
         const sections = document.querySelectorAll("section");
-        const navLinks = document.querySelectorAll(".nav-link");
-
         window.addEventListener("scroll", () => {
             let current = "";
-            sections.forEach((section) => {
+            sections.forEach(section => {
                 const sectionTop = section.offsetTop - 120;
                 if (scrollY >= sectionTop) {
                     current = section.getAttribute("id");
                 }
             });
-            navLinks.forEach((link) => {
+            navLinks.forEach(link => {
                 link.classList.remove("active-link");
                 if (link.getAttribute("href") === "#" + current) {
                     link.classList.add("active-link");
                 }
             });
-        });
 
-        // Lightbox
-        const galleryImages = document.querySelectorAll("#gallery img");
-        const lightbox = document.getElementById("lightbox");
-        const lightboxImage = document.getElementById("lightboxImage");
-        const closeLightbox = document.getElementById("closeLightbox");
-        const prevImageBtn = document.getElementById("prevImage");
-        const nextImageBtn = document.getElementById("nextImage");
+            // Show scroll top button
+            document.getElementById('scrollTopBtn').style.display = scrollY > window.innerHeight ? 'block' : 'none';
 
-        let currentIndex = 0;
-
-        galleryImages.forEach((img, index) => {
-            img.addEventListener("click", () => {
-                lightbox.classList.add("active");
-                lightboxImage.src = img.src;
-                currentIndex = index;
+            // Animate sections on scroll
+            document.querySelectorAll('.scroll-target').forEach(section => {
+                const rect = section.getBoundingClientRect();
+                if (rect.top < window.innerHeight - 100) {
+                    section.classList.add('visible');
+                }
             });
         });
 
-        closeLightbox.addEventListener("click", () => {
-            lightbox.classList.remove("active");
+        document.getElementById('scrollTopBtn').addEventListener('click', () => {
+            window.scrollTo({ top: 0, behavior: 'smooth' });
         });
 
-        function showImage(index) {
-            if (index >= 0 && index < galleryImages.length) {
-                lightboxImage.src = galleryImages[index].src;
-                currentIndex = index;
-            }
-        }
+        // Lightbox functionality
+        const lightbox = document.getElementById('lightbox');
+        const lightboxImg = lightbox.querySelector('img');
+        const closeBtn = lightbox.querySelector('.close-btn');
+        const designItems = document.querySelectorAll('.design-item');
+        let currentIndex = 0;
 
-        prevImageBtn.addEventListener("click", () => showImage(currentIndex - 1));
-        nextImageBtn.addEventListener("click", () => showImage(currentIndex + 1));
+        const openLightbox = index => {
+            currentIndex = index;
+            lightboxImg.src = designItems[index].src;
+            lightbox.style.display = 'flex';
+        };
 
-        document.addEventListener("keydown", (e) => {
-            if (lightbox.classList.contains("active")) {
-                if (e.key === "ArrowLeft") showImage(currentIndex - 1);
-                if (e.key === "ArrowRight") showImage(currentIndex + 1);
-                if (e.key === "Escape") lightbox.classList.remove("active");
+        const closeLightbox = () => lightbox.style.display = 'none';
+        const showPrev = () => {
+            currentIndex = (currentIndex - 1 + designItems.length) % designItems.length;
+            lightboxImg.src = designItems[currentIndex].src;
+        };
+        const showNext = () => {
+            currentIndex = (currentIndex + 1) % designItems.length;
+            lightboxImg.src = designItems[currentIndex].src;
+        };
+
+        designItems.forEach((item, index) => item.addEventListener('click', () => openLightbox(index)));
+        lightbox.querySelector('.prev').addEventListener('click', showPrev);
+        lightbox.querySelector('.next').addEventListener('click', showNext);
+        closeBtn.addEventListener('click', closeLightbox);
+        lightbox.addEventListener('click', e => { if (e.target === lightbox) closeLightbox(); });
+
+        document.addEventListener('keydown', (e) => {
+            if (lightbox.style.display === 'flex') {
+                if (e.key === 'ArrowLeft') showPrev();
+                if (e.key === 'ArrowRight') showNext();
+                if (e.key === 'Escape') closeLightbox();
             }
+        });
+
+        // Smooth scroll for "View My Works" and "Explore My Skills" buttons
+        const viewWorksBtn = document.getElementById('viewWorksBtn');
+        const exploreSkillsBtn = document.getElementById('exploreSkillsBtn');
+        const skillsSection = document.getElementById('skills');
+        const designsSection = document.getElementById('designs');
+
+        viewWorksBtn.addEventListener('click', (e) => {
+            e.preventDefault();
+            designsSection.classList.add('scroll-target');
+            setTimeout(() => designsSection.classList.add('visible'), 50);
+            designsSection.scrollIntoView({ behavior: 'smooth' });
+        });
+
+        exploreSkillsBtn.addEventListener('click', (e) => {
+            e.preventDefault();
+            skillsSection.classList.add('scroll-target');
+            setTimeout(() => skillsSection.classList.add('visible'), 50);
+            skillsSection.scrollIntoView({ behavior: 'smooth' });
         });
     </script>
 </body>
